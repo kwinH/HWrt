@@ -62,3 +62,7 @@ CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-bandix luci-i18n-bandix-zh-cn"
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-qbittorrent"
 # 家长控制
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-parentcontrol"
+# 流量统计
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-nlbwmon"
+# 动态域名解析
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-ddns-go"
