@@ -559,6 +559,7 @@ jobs:
 
 
       - name: Build Wireless ImmortalWrt
+        id: tag
         run: |
           profile="${{ github.event.inputs.profile }}"
           echo "Building for profile: $profile"
@@ -634,6 +635,10 @@ jobs:
                   ;;
             esac
           
+            # 生成标签
+            RTAG="${{ github.event.inputs.profile }}-$tag"
+            echo "RELEASE_TAG=$RTAG-$(date +%Y%m%d%H%M%S)" | tee -a $GITHUB_OUTPUT >> $GITHUB_ENV          
+          
             docker run --rm -i \
               --user root \
               -v "${{ github.workspace }}/bin:/home/build/immortalwrt/bin" \
@@ -648,7 +653,6 @@ jobs:
               -e PPPOE_ACCOUNT=${{ inputs.pppoe_account }} \
               -e PPPOE_PASSWORD=${{ inputs.pppoe_password }} \
             immortalwrt/imagebuilder:$tag /bin/bash /home/build/immortalwrt/build.sh
-          
 
       - name: Create info
         run: |
@@ -666,7 +670,7 @@ jobs:
       - name: Upload ImmortalWrt as release assets
         uses: softprops/action-gh-release@v2.2.1
         with:
-          tag_name: ${{ github.event.inputs.profile }}
+          tag_name: ${{ steps.tag.outputs.RELEASE_TAG }}
           name: ImmortalWrt-Wireless
           body_path: ${{ github.workspace }}/mediatek-filogic/info.md
           files: |
