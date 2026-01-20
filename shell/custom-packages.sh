@@ -58,3 +58,7 @@ CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-taskplan luci-i18n-taskplan-zh-cn"
 # Bandix流量监控 by timsaya
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-bandix luci-i18n-bandix-zh-cn"
 
+# BT下载工具
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-qbittorrent"
+# 家长控制
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-parentcontrol"
