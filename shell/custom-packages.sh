@@ -66,5 +66,5 @@ CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-nlbwmon"
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-ddns-go"
 
 
-# 家长控制
-CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-parentcontrol"
+# 定时重启
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-timedreboot"
