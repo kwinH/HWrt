@@ -66,5 +66,5 @@ CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-nlbwmon"
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-ddns-go"
 
 
-# 定时重启
-CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-timedreboot"
+# Mesh组网
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-easymesh"
