@@ -639,6 +639,7 @@ jobs:
             RTAG="${{ github.event.inputs.profile }}-$tag"
             echo "RELEASE_TAG=$RTAG-$(date +%Y%m%d%H%M%S)" | tee -a $GITHUB_OUTPUT >> $GITHUB_ENV          
           
+            touch ./packages.txt
             docker run --rm -i \
               --user root \
               -v "${{ github.workspace }}/bin:/home/build/immortalwrt/bin" \
@@ -647,6 +648,7 @@ jobs:
               -v "${{ github.workspace }}/arch/arch.conf:/home/build/immortalwrt/files/etc/opkg/arch.conf" \
               -v "${{ github.workspace }}/shell:/home/build/immortalwrt/shell" \
               -v "${{ github.workspace }}/mediatek-filogic/build24.sh:/home/build/immortalwrt/build.sh" \
+              -v "./packages.txt:/home/build/immortalwrt/packages.txt" \
               -e PROFILE=$profile \
               -e INCLUDE_DOCKER=$include_docker \
               -e ENABLE_PPPOE=${{ inputs.enable_pppoe }} \
@@ -656,6 +658,14 @@ jobs:
 
       - name: Create info
         run: |
+          ls -hals ./
+          if [ -f "./packages.txt" ]; then
+          echo "cat packages.txt"
+          cat packages.txt
+            echo -e "\n ## 包含的软件包列表:" >> ${{ github.workspace }}/mediatek-filogic/info.md
+            cat ./packages.txt >> ${{ github.workspace }}/mediatek-filogic/info.md
+          fi
+
           if [ "${{ github.event.inputs.include_docker }}" == "yes" ]; then
             extra_content="### 默认带docker"
             echo -e "\n $extra_content" >> ${{ github.workspace }}/mediatek-filogic/info.md
@@ -665,7 +675,8 @@ jobs:
           custom_router_ip="${{ github.event.inputs.custom_router_ip }}"
           extra_content_ip="#### 管理地址 $custom_router_ip"
           echo -e "\n $extra_content_ip" >> ${{ github.workspace }}/mediatek-filogic/info.md
-          
+          echo "cat info.md"
+          cat ${{ github.workspace }}/mediatek-filogic/info.md
           
       - name: Upload ImmortalWrt as release assets
         uses: softprops/action-gh-release@v2.2.1
